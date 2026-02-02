@@ -9,16 +9,19 @@ namespace StudentManagement.DAL.Repositories
     /// </summary>
     public class UserRepository : GenericRepository<User>, IUserRepository
     {
+        private readonly AppDbContext _context;
+
         public UserRepository(AppDbContext context) : base(context)
         {
+            _context = context;
         }
 
         /// <summary>
         /// Lấy user theo email
         /// </summary>
-        public async Task<User?> GetByEmailAsync(string email)
+        public async Task<User> GetByEmailAsync(string email)
         {
-            return await _dbSet
+            return await _context.Users
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
@@ -26,25 +29,27 @@ namespace StudentManagement.DAL.Repositories
         /// <summary>
         /// Lấy user theo mã sinh viên
         /// </summary>
-        public async Task<User?> GetByRollNumberAsync(string rollNumber)
+        public async Task<User> GetByRollNumberAsync(string rollNumber)
         {
-            return await _dbSet.FirstOrDefaultAsync(u => u.RollNumber == rollNumber);
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.RollNumber == rollNumber);
         }
 
         /// <summary>
-        /// Kiểm tra email đã tồn tại chưa (không tính user inactive)
+        /// Kiểm tra email đã tồn tại chưa (không tính đã xóa)
         /// </summary>
         public async Task<bool> EmailExistsAsync(string email)
         {
-            return await _dbSet.AnyAsync(u => u.Email == email && u.Status == 1);
+            return await _context.Users
+                .AnyAsync(u => u.Email == email && !u.IsDeleted);
         }
 
         /// <summary>
         /// Lấy user kèm thông tin Role
         /// </summary>
-        public async Task<User?> GetWithRoleAsync(int userId)
+        public async Task<User> GetWithRoleAsync(int userId)
         {
-            return await _dbSet
+            return await _context.Users
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.UserId == userId);
         }

@@ -1,0 +1,70 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\Student_Management\\StudentManagement\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FD9BBB13-0074-44AA-8A1D-16849616B375}|StudentManagement.BLL\\StudentManagement.BLL.csproj|f:\\student_management\\studentmanagement\\studentmanagement.bll\\services\\dtos\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FD9BBB13-0074-44AA-8A1D-16849616B375}|StudentManagement.BLL\\StudentManagement.BLL.csproj|solutionrelative:studentmanagement.bll\\services\\dtos\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0FAEA996-256F-4B11-848A-E76B2C2405E5}|StudentManagement.DAL\\StudentManagement.DAL.csproj|f:\\student_management\\studentmanagement\\studentmanagement.dal\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0FAEA996-256F-4B11-848A-E76B2C2405E5}|StudentManagement.DAL\\StudentManagement.DAL.csproj|solutionrelative:studentmanagement.dal\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "User.cs",
+              "DocumentMoniker": "F:\\Student_Management\\StudentManagement\\StudentManagement.DAL\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "StudentManagement.DAL\\Entities\\User.cs",
+              "ToolTip": "F:\\Student_Management\\StudentManagement\\StudentManagement.DAL\\Entities\\User.cs",
+              "RelativeToolTip": "StudentManagement.DAL\\Entities\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T08:54:45.379Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthDTOs.cs",
+              "DocumentMoniker": "F:\\Student_Management\\StudentManagement\\StudentManagement.BLL\\Services\\DTOs\\AuthDTOs.cs",
+              "RelativeDocumentMoniker": "StudentManagement.BLL\\Services\\DTOs\\AuthDTOs.cs",
+              "ToolTip": "F:\\Student_Management\\StudentManagement\\StudentManagement.BLL\\Services\\DTOs\\AuthDTOs.cs",
+              "RelativeToolTip": "StudentManagement.BLL\\Services\\DTOs\\AuthDTOs.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAowD0AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T08:53:17.152Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

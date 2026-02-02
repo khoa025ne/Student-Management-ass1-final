@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StudentManagement.BLL\StudentManagement.BLL.csproj" />
+    <ProjectReference Include="..\StudentManagement.DAL\StudentManagement.DAL.csproj" />
   </ItemGroup>
 
 </Project>

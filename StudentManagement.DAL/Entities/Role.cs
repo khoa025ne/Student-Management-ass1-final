@@ -24,23 +24,16 @@ namespace StudentManagement.DAL.Entities
         public string Description { get; set; } = string.Empty;
 
         /// <summary>
-        /// Trạng thái: 1 = Active, 0 = Inactive
-        /// </summary>
-        public int? Status { get; set; } = 1; // ✅ MỚI THÊM
-
-        /// <summary>
         /// Ngày tạo
         /// </summary>
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         /// <summary>
-        /// Ngày cập nhật lần cuối
-        /// </summary>
-        public DateTime? UpdatedAt { get; set; } // ✅ MỚI THÊM
-
-        /// <summary>
         /// Navigation: Danh sách người dùng có vai trò này
         /// </summary>
         public ICollection<User> Users { get; set; } = new HashSet<User>();
+
+        // ❌ LOẠI BỎ: Phân quyền không lưu trong DB nữa
+        // public ICollection<Permission> Permissions { get; set; } = new List<Permission>();
     }
 }

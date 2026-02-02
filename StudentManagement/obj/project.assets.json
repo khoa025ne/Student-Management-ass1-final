@@ -2332,7 +2332,8 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.0",
-      "StudentManagement.BLL >= 1.0.0"
+      "StudentManagement.BLL >= 1.0.0",
+      "StudentManagement.DAL >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -2369,6 +2370,9 @@
           "projectReferences": {
             "F:\\Student_Management\\StudentManagement\\StudentManagement.BLL\\StudentManagement.BLL.csproj": {
               "projectPath": "F:\\Student_Management\\StudentManagement\\StudentManagement.BLL\\StudentManagement.BLL.csproj"
+            },
+            "F:\\Student_Management\\StudentManagement\\StudentManagement.DAL\\StudentManagement.DAL.csproj": {
+              "projectPath": "F:\\Student_Management\\StudentManagement\\StudentManagement.DAL\\StudentManagement.DAL.csproj"
             }
           }
         }

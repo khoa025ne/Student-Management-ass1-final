@@ -182,6 +182,9 @@
             "projectReferences": {
               "F:\\Student_Management\\StudentManagement\\StudentManagement.BLL\\StudentManagement.BLL.csproj": {
                 "projectPath": "F:\\Student_Management\\StudentManagement\\StudentManagement.BLL\\StudentManagement.BLL.csproj"
+              },
+              "F:\\Student_Management\\StudentManagement\\StudentManagement.DAL\\StudentManagement.DAL.csproj": {
+                "projectPath": "F:\\Student_Management\\StudentManagement\\StudentManagement.DAL\\StudentManagement.DAL.csproj"
               }
             }
           }
