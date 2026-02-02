@@ -9,10 +9,10 @@ namespace StudentManagement.BLL.Interfaces
         Task<(bool Success, string Message)> RegisterAsync(RegisterDTO registerDto);
         
         // Đăng nhập
-        Task<(bool Success, LoginResponseDTO Data, string Message)> LoginAsync(LoginDTO loginDto);
+        Task<(bool Success, LoginResponseDTO? Data, string Message)> LoginAsync(LoginDTO loginDto);
         
         // Lấy thông tin user hiện tại
-        Task<UserDTO> GetCurrentUserAsync(int userId);
+        Task<UserDTO?> GetCurrentUserAsync(int userId);
         
         // Đăng xuất
         Task LogoutAsync(int userId);

@@ -69,9 +69,9 @@ namespace StudentManagement.BLL.Services
             }
         }
 
-        public async Task<(bool Success, LoginResponseDTO Data, string Message)> LoginAsync(LoginDTO loginDto)
+        public async Task<(bool Success, LoginResponseDTO? Data, string Message)> LoginAsync(LoginDTO loginDto)
         {
-            if (string.IsNullOrWhiteSpace(loginDto.Email) || string.IsNullOrWhiteSpace(loginDto.Password))
+            if (string.IsNullOrWhiteSpace(loginDto?.Email) || string.IsNullOrWhiteSpace(loginDto?.Password))
                 return (false, null, "Email và mật khẩu không được để trống");
 
             var user = await _userRepository.GetByEmailAsync(loginDto.Email);
@@ -81,24 +81,24 @@ namespace StudentManagement.BLL.Services
             if (!user.IsActive)
                 return (false, null, "Tài khoản của bạn đã bị khóa");
 
-            if (!VerifyPassword(loginDto.Password, user.PasswordHash, user.PasswordSalt))
+            if (!VerifyPassword(loginDto.Password, user.PasswordHash ?? string.Empty, user.PasswordSalt ?? string.Empty))
                 return (false, null, "Email hoặc mật khẩu không chính xác");
 
             var response = new LoginResponseDTO
             {
                 UserId = user.UserId,
-                Name = user.Name,
-                Email = user.Email,
-                RoleName = user.Role.Name,
-                RollNumber = user.RollNumber,
-                ClassCode = user.ClassCode,
+                Name = user.Name ?? string.Empty,
+                Email = user.Email ?? string.Empty,
+                RoleName = user.Role?.Name ?? string.Empty,
+                RollNumber = user.RollNumber ?? string.Empty,
+                ClassCode = user.ClassCode ?? string.Empty,
                 WalletBalance = user.WalletBalance
             };
 
             return (true, response, "Đăng nhập thành công");
         }
 
-        public async Task<UserDTO> GetCurrentUserAsync(int userId)
+        public async Task<UserDTO?> GetCurrentUserAsync(int userId)
         {
             var user = await _userRepository.GetWithRoleAsync(userId);
             if (user == null || user.IsDeleted)
@@ -146,18 +146,18 @@ namespace StudentManagement.BLL.Services
             return new UserDTO
             {
                 UserId = user.UserId,
-                Name = user.Name,
-                Email = user.Email,
-                Phone = user.Phone,
-                Address = user.Address,
-                Gender = user.Gender,
+                Name = user.Name ?? string.Empty,
+                Email = user.Email ?? string.Empty,
+                Phone = user.Phone ?? string.Empty,
+                Address = user.Address ?? string.Empty,
+                Gender = user.Gender ?? string.Empty,
                 DateOfBirth = user.DateOfBirth,
-                AvatarUrl = user.AvatarUrl,
-                RollNumber = user.RollNumber,
-                ClassCode = user.ClassCode,
+                AvatarUrl = user.AvatarUrl ?? string.Empty,
+                RollNumber = user.RollNumber ?? string.Empty,
+                ClassCode = user.ClassCode ?? string.Empty,
                 Batch = user.Batch,
                 WalletBalance = user.WalletBalance,
-                RoleName = user.Role?.Name,
+                RoleName = user.Role?.Name ?? string.Empty,
                 IsActive = user.IsActive
             };
         }

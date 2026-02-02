@@ -83,7 +83,7 @@ namespace StudentManagement.Controllers
                 return View(createDto);
             }
 
-            TempData["SuccessMessage"] = $"{message}. Mã sinh viên: {data.RollNumber}";
+            TempData["SuccessMessage"] = $"{message}. Mã sinh viên: {data?.RollNumber}";
             return RedirectToAction("ManageAccounts");
         }
 
