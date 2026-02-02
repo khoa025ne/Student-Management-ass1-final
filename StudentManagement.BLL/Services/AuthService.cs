@@ -22,33 +22,46 @@ namespace StudentManagement.BLL.Services
 
         public async Task<(bool Success, string Message)> RegisterAsync(RegisterDTO registerDto)
         {
+            // Validate dữ liệu
+            if (string.IsNullOrWhiteSpace(registerDto.Email) || string.IsNullOrWhiteSpace(registerDto.Password))
+                return (false, "Email và mật khẩu không được để trống");
+
             if (registerDto.Password != registerDto.ConfirmPassword)
-                return (false, "Mật khẩu xác nhận không khớp");
+                return (false, "Mật khẩu không trùng khớp");
 
+            // Kiểm tra email đã tồn tại
             if (await _userRepository.EmailExistsAsync(registerDto.Email))
-                return (false, "Email này đã được đăng ký");
+                return (false, "Email đã được đăng ký");
 
+            // Lấy role Student
             var studentRole = await _roleRepository.FirstOrDefaultAsync(r => r.Name == "Student");
-            var (hash, salt) = HashPassword(registerDto.Password);
+            if (studentRole == null)
+                return (false, "Không tìm thấy role Student");
 
+            // Hash mật khẩu
+            var (passwordHash, passwordSalt) = HashPassword(registerDto.Password);
+
+            // Tạo user mới
             var newUser = new User
             {
                 Name = registerDto.Name,
-                FullName = registerDto.Name,
                 Email = registerDto.Email,
                 Phone = registerDto.Phone,
-                PasswordHash = hash,
-                PasswordSalt = salt,
-                RoleId = studentRole?.RoleId,
+                DateOfBirth = registerDto.DateOfBirth,
+                Gender = registerDto.Gender,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                RoleId = studentRole.RoleId,
                 IsActive = true,
-                CreatedAt = DateTime.UtcNow
+                IsDeleted = false,
+                WalletBalance = 0
             };
 
             try
             {
                 await _userRepository.AddAsync(newUser);
                 await _userRepository.SaveChangesAsync();
-                return (true, "Đăng ký thành công!");
+                return (true, "Đăng ký thành công. Vui lòng đăng nhập.");
             }
             catch (Exception ex)
             {
@@ -56,57 +69,94 @@ namespace StudentManagement.BLL.Services
             }
         }
 
-        public async Task<(bool Success, LoginResponseDTO? Data, string Message)> LoginAsync(LoginDTO loginDto)
+        public async Task<(bool Success, LoginResponseDTO Data, string Message)> LoginAsync(LoginDTO loginDto)
         {
+            if (string.IsNullOrWhiteSpace(loginDto.Email) || string.IsNullOrWhiteSpace(loginDto.Password))
+                return (false, null, "Email và mật khẩu không được để trống");
+
             var user = await _userRepository.GetByEmailAsync(loginDto.Email);
-            if (user == null || user.IsDeleted) return (false, null, "Email hoặc mật khẩu không đúng");
+            if (user == null || user.IsDeleted)
+                return (false, null, "Email hoặc mật khẩu không chính xác");
 
-            if (!user.IsActive || user.Status == 0) return (false, null, "Tài khoản của bạn đang bị khóa");
+            if (!user.IsActive)
+                return (false, null, "Tài khoản của bạn đã bị khóa");
 
-            bool isValid = VerifyPassword(loginDto.Password, user.PasswordHash!, user.PasswordSalt!);
-            if (!isValid) return (false, null, "Email hoặc mật khẩu không đúng");
+            if (!VerifyPassword(loginDto.Password, user.PasswordHash, user.PasswordSalt))
+                return (false, null, "Email hoặc mật khẩu không chính xác");
 
-            return (true, new LoginResponseDTO
+            var response = new LoginResponseDTO
             {
                 UserId = user.UserId,
-                FullName = user.FullName ?? user.Name,
+                Name = user.Name,
                 Email = user.Email,
-                RoleName = user.Role?.Name ?? "User",
-                RollNumber = user.RollNumber ?? "",
+                RoleName = user.Role.Name,
+                RollNumber = user.RollNumber,
+                ClassCode = user.ClassCode,
                 WalletBalance = user.WalletBalance
-            }, "Đăng nhập thành công");
+            };
+
+            return (true, response, "Đăng nhập thành công");
         }
 
-        public async Task<UserDTO?> GetCurrentUserAsync(int userId)
+        public async Task<UserDTO> GetCurrentUserAsync(int userId)
         {
             var user = await _userRepository.GetWithRoleAsync(userId);
-            return (user == null || !user.IsActive) ? null : MapToUserDTO(user);
+            if (user == null || user.IsDeleted)
+                return null;
+
+            return MapToUserDTO(user);
         }
 
-        public async Task LogoutAsync(int userId) => await Task.CompletedTask;
-
-        private (string Hash, string Salt) HashPassword(string password)
+        public async Task LogoutAsync(int userId)
         {
-            using var hmac = new HMACSHA512();
-            return (Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(password))),
-                    Convert.ToBase64String(hmac.Key));
+            await Task.CompletedTask;
         }
 
-        private bool VerifyPassword(string password, string hash, string salt)
+        // ===== PRIVATE METHODS =====
+
+        private (string PasswordHash, string PasswordSalt) HashPassword(string password)
         {
-            using var hmac = new HMACSHA512(Convert.FromBase64String(salt));
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-            return Convert.ToBase64String(computedHash) == hash;
+            using (var hmac = new HMACSHA512())
+            {
+                var salt = hmac.Key;
+                var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return (Convert.ToBase64String(hash), Convert.ToBase64String(salt));
+            }
+        }
+
+        private bool VerifyPassword(string password, string passwordHash, string passwordSalt)
+        {
+            var saltBytes = Convert.FromBase64String(passwordSalt);
+            using (var hmac = new HMACSHA512(saltBytes))
+            {
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var storedHash = Convert.FromBase64String(passwordHash);
+                
+                for (int i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[i] != storedHash[i])
+                        return false;
+                }
+                return true;
+            }
         }
 
         private UserDTO MapToUserDTO(User user)
         {
             return new UserDTO
             {
-                Id = user.UserId,
-                Name = user.Name ?? user.FullName,
+                UserId = user.UserId,
+                Name = user.Name,
                 Email = user.Email,
                 Phone = user.Phone,
+                Address = user.Address,
+                Gender = user.Gender,
+                DateOfBirth = user.DateOfBirth,
+                AvatarUrl = user.AvatarUrl,
+                RollNumber = user.RollNumber,
+                ClassCode = user.ClassCode,
+                Batch = user.Batch,
+                WalletBalance = user.WalletBalance,
                 RoleName = user.Role?.Name,
                 IsActive = user.IsActive
             };

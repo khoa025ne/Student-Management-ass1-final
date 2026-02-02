@@ -41,8 +41,8 @@ namespace StudentManagement.BLL.Services
 
             var newUser = new User
             {
-                Name = createDto.Name ?? createDto.FullName,
-                FullName = createDto.FullName ?? createDto.Name,
+                Name = createDto.Name,
+                FullName = createDto.Name,
                 Email = createDto.Email,
                 Phone = createDto.Phone,
                 Gender = createDto.Gender,
@@ -161,7 +161,7 @@ namespace StudentManagement.BLL.Services
             if (user == null) return new UserDTO();
             return new UserDTO
             {
-                Id = user.UserId,
+                UserId = user.UserId,
                 Name = user.Name ?? user.FullName,
                 Email = user.Email,
                 Phone = user.Phone,

@@ -29,6 +29,16 @@ namespace StudentManagement.DAL.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         /// <summary>
+        /// Trạng thái: 1 = Active, 0 = Inactive
+        /// </summary>
+        public int Status { get; set; } = 1;
+
+        /// <summary>
+        /// Ngày cập nhật lần cuối
+        /// </summary>
+        public DateTime? UpdatedAt { get; set; }
+
+        /// <summary>
         /// Navigation: Danh sách người dùng có vai trò này
         /// </summary>
         public ICollection<User> Users { get; set; } = new HashSet<User>();
