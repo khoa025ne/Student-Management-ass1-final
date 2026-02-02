@@ -7,10 +7,8 @@ namespace StudentManagement.Controllers
 {
     public class AuthController : Controller
     {
-        // 1. Mở comment khai báo biến service
         private readonly IAuthService _authService;
 
-        // 2. Mở comment và sửa Constructor để nhận IAuthService
         public AuthController(IAuthService authService)
         {
             _authService = authService;
@@ -24,8 +22,9 @@ namespace StudentManagement.Controllers
 
             if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(userRole))
             {
-                return RedirectToDashboard(userRole);
+                return RedirectToAction("Index", "Home");
             }
+
             return View();
         }
 
@@ -33,18 +32,17 @@ namespace StudentManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginDTO loginDto)
         {
-            if (!ModelState.IsValid) return View(loginDto);
+            if (!ModelState.IsValid)
+                return View(loginDto);
 
-            // 3. Sử dụng service thay vì test cứng (Nếu bạn muốn dùng logic thật)
-            var (success, user, message) = await _authService.LoginAsync(loginDto);
+            var (success, data, message) = await _authService.LoginAsync(loginDto);
 
-            if (success && user != null)
+            if (success && data != null)
             {
-                HttpContext.Session.SetString("UserId", user.UserId.ToString());
-                HttpContext.Session.SetString("UserName", user.FullName);
-                HttpContext.Session.SetString("UserRole", user.RoleName);
-
-                return RedirectToDashboard(user.RoleName);
+                HttpContext.Session.SetString("UserId", data.UserId.ToString());
+                HttpContext.Session.SetString("UserName", data.Name);
+                HttpContext.Session.SetString("UserRole", data.RoleName);
+                return RedirectToAction("Index", "Home");
             }
 
             ModelState.AddModelError("", message);
@@ -61,9 +59,9 @@ namespace StudentManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterDTO registerDto)
         {
-            if (!ModelState.IsValid) return View(registerDto);
+            if (!ModelState.IsValid)
+                return View(registerDto);
 
-            // Lỗi của bạn biến mất ở đây vì _authService đã được định nghĩa
             var (success, message) = await _authService.RegisterAsync(registerDto);
 
             if (!success)
@@ -86,21 +84,8 @@ namespace StudentManagement.Controllers
             }
 
             HttpContext.Session.Clear();
-            TempData["SuccessMessage"] = "Đăng xuất thành công!";
+            TempData["SuccessMessage"] = "�ang xu?t th�nh c�ng!";
             return RedirectToAction("Login", "Auth");
-        }
-
-        // Hàm phụ giúp chuyển hướng dashboard
-        private IActionResult RedirectToDashboard(string role)
-        {
-            return role switch
-            {
-                "Admin" => RedirectToAction("AdminDashboard", "Home"),
-                "Manager" => RedirectToAction("ManagerDashboard", "Home"),
-                "Teacher" => RedirectToAction("TeacherDashboard", "Home"),
-                "Student" => RedirectToAction("StudentDashboard", "Home"),
-                _ => RedirectToAction("Index", "Home")
-            };
         }
     }
 }
