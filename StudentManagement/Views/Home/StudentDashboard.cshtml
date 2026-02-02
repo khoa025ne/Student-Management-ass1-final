@@ -1,0 +1,285 @@
+@model StudentManagement.ViewModels.StudentDashboardViewModel
+@{
+    ViewData["Title"] = "Student Dashboard";
+}
+
+<!-- Student Dashboard Header -->
+<div class="bg-gradient-to-r from-blue-500 to-cyan-600 rounded-2xl shadow-lg text-white p-6 mb-8" data-aos="fade-up">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-bold mb-2">👨‍🎓 Sinh viên</h1>
+            <p class="text-blue-100">@Model.WelcomeMessage</p>
+        </div>
+        <div class="text-right">
+            <p class="text-sm text-blue-200">GPA hiện tại</p>
+            <p class="text-2xl font-bold">@Model.CurrentGPA.ToString("F1")</p>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    @foreach (var stat in Model.Statistics)
+    {
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition-shadow duration-300" data-aos="fade-up" data-aos-delay="@(Model.Statistics.IndexOf(stat) * 100)">
+            <div class="flex items-center justify-between mb-4">
+                <div class="text-2xl">@stat.Icon</div>
+                @if (!string.IsNullOrEmpty(stat.Change) && stat.Change != "0")
+                {
+                    <div class="text-sm font-medium text-@(stat.Color)-600 bg-@(stat.Color)-50 px-2 py-1 rounded-full">
+                        @stat.Change
+                    </div>
+                }
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-1">@stat.Value</h3>
+            <p class="text-gray-600 text-sm">@stat.Title</p>
+        </div>
+    }
+</div>
+
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <!-- Quick Actions & Current Enrollments -->
+    <div class="lg:col-span-2">
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 mb-6" data-aos="fade-right">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                🚀 Tính năng chính
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @foreach (var action in Model.QuickActions)
+                {
+                    <a href="@action.ActionUrl" class="group">
+                        <div class="border-2 border-gray-100 rounded-xl p-4 hover:border-@(action.Color)-200 hover:bg-@(action.Color)-50 transition-all duration-300">
+                            <div class="flex items-center space-x-3">
+                                <div class="text-2xl">@action.Icon</div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-900 group-hover:text-@(action.Color)-700">@action.Title</h3>
+                                    <p class="text-sm text-gray-600 group-hover:text-@(action.Color)-600">@action.Description</p>
+                                </div>
+                                <div class="text-@(action.Color)-400 group-hover:text-@(action.Color)-600">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+        
+        <!-- Current Semester Schedule -->
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6" data-aos="fade-right" data-aos-delay="200">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                📅 Thời khóa biểu học kỳ hiện tại
+            </h2>
+            <div class="space-y-4">
+                <div class="border border-blue-200 rounded-xl p-4 bg-blue-50">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-semibold text-blue-900">CSD201 - Data Structures</h3>
+                        <span class="text-xs bg-green-200 text-green-800 px-2 py-1 rounded-full">Đang học</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-gray-600">Lịch học:</span>
+                            <span class="font-medium">T4-T7, Slot 2</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Phòng:</span>
+                            <span class="font-medium">AL-R302</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Giảng viên:</span>
+                            <span class="font-medium">Lê Cường</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Điểm hiện tại:</span>
+                            <span class="font-medium text-green-600">8.2</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border border-purple-200 rounded-xl p-4 bg-purple-50">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-semibold text-purple-900">PRN211 - .NET Programming</h3>
+                        <span class="text-xs bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full">Sắp thi</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-gray-600">Lịch học:</span>
+                            <span class="font-medium">T3-T6, Slot 4</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Phòng:</span>
+                            <span class="font-medium">BE-R101</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Giảng viên:</span>
+                            <span class="font-medium">Trần Đạt</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Điểm hiện tại:</span>
+                            <span class="font-medium text-blue-600">7.5</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <a href="/Student/Schedule" class="text-blue-600 hover:text-blue-700 font-medium">
+                        Xem thời khóa biểu đầy đủ →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notifications & AI Analysis -->
+    <div class="space-y-6">
+        <!-- Wallet -->
+        <div class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl shadow-lg text-white p-6" data-aos="fade-left">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold">💰 Ví học phí</h2>
+                <div class="text-2xl">💳</div>
+            </div>
+            <div class="text-3xl font-bold mb-2">@Model.WalletBalance.ToString("N0") VND</div>
+            <p class="text-yellow-100 text-sm mb-4">Số dư khả dụng</p>
+            <div class="flex space-x-2">
+                <a href="/Student/Wallet/Deposit" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                    Nạp tiền
+                </a>
+                <a href="/Student/Wallet/History" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                    Lịch sử
+                </a>
+            </div>
+        </div>
+        
+        <!-- Notifications -->
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6" data-aos="fade-left" data-aos-delay="200">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                🔔 Thông báo
+            </h2>
+            <div class="space-y-4">
+                @foreach (var notification in Model.Notifications)
+                {
+                    <div class="border-l-4 border-@(notification.Type == "success" ? "green" : notification.Type == "warning" ? "yellow" : notification.Type == "error" ? "red" : "blue")-400 bg-@(notification.Type == "success" ? "green" : notification.Type == "warning" ? "yellow" : notification.Type == "error" ? "red" : "blue")-50 p-4 rounded-r-lg">
+                        <h3 class="font-semibold text-gray-900">@notification.Title</h3>
+                        <p class="text-sm text-gray-600 mt-1">@notification.Message</p>
+                        <p class="text-xs text-gray-500 mt-2">@notification.CreatedAt.ToString("dd/MM HH:mm")</p>
+                    </div>
+                }
+            </div>
+        </div>
+        
+        <!-- AI Analysis -->
+        <div class="bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl shadow-lg text-white p-6" data-aos="fade-left" data-aos-delay="400">
+            <h2 class="text-lg font-bold mb-4 flex items-center">
+                🤖 AI Phân tích học tập
+            </h2>
+            <div class="space-y-4">
+                <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <div class="text-green-400">✨</div>
+                        <span class="font-medium">Điểm mạnh</span>
+                    </div>
+                    <p class="text-sm text-purple-100">Bạn thể hiện tốt ở môn Cấu trúc dữ liệu và Giải thuật</p>
+                </div>
+                
+                <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <div class="text-yellow-400">⚠️</div>
+                        <span class="font-medium">Cần cải thiện</span>
+                    </div>
+                    <p class="text-sm text-purple-100">Nên dành thêm thời gian cho môn Lập trình .NET</p>
+                </div>
+                
+                <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <div class="text-blue-400">💡</div>
+                        <span class="font-medium">Gợi ý</span>
+                    </div>
+                    <p class="text-sm text-purple-100">Hãy tham gia thêm các dự án thực hành</p>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="/Student/AIAnalysis" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg text-sm font-medium transition-all inline-block">
+                    Xem chi tiết →
+                </a>
+            </div>
+        </div>
+        
+        <!-- Study Progress -->
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6" data-aos="fade-left" data-aos-delay="600">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                📈 Tiến độ học tập
+            </h2>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600">Tín chỉ hoàn thành</span>
+                    <span class="font-semibold text-blue-600">45/120</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full" style="width: 37.5%"></div>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600">GPA Target</span>
+                    <span class="font-semibold text-green-600">7.8/8.0</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div class="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full" style="width: 97.5%"></div>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600">Học kỳ hoàn thành</span>
+                    <span class="font-semibold text-purple-600">3/8</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 h-3 rounded-full" style="width: 37.5%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Upcoming Tasks -->
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6" data-aos="fade-left" data-aos-delay="800">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                ⏰ Sắp tới
+            </h2>
+            <div class="space-y-3">
+                <div class="flex items-center space-x-3 p-3 bg-red-50 rounded-lg">
+                    <div class="text-red-600">💸</div>
+                    <div>
+                        <p class="font-medium text-gray-900">Hạn đóng học phí</p>
+                        <p class="text-sm text-red-600">5 ngày nữa</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                    <div class="text-blue-600">📚</div>
+                    <div>
+                        <p class="font-medium text-gray-900">Thi giữa kỳ PRN211</p>
+                        <p class="text-sm text-blue-600">10 ngày nữa</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+                    <div class="text-green-600">📝</div>
+                    <div>
+                        <p class="font-medium text-gray-900">Đăng ký môn học</p>
+                        <p class="text-sm text-green-600">Mở từ 15/02</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AOS Animation Script -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+</script>

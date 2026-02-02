@@ -1,0 +1,185 @@
+@model StudentManagement.BLL.Services.DTOs.UserDTO
+
+@{
+    ViewData["Title"] = "Hồ sơ cá nhân";
+}
+
+<div class="row two-col" style="margin-top: 2rem;">
+    <!-- Thông tin cá nhân -->
+    <div class="card">
+        <div class="card-header">
+            <i class="bi bi-person"></i>
+            Thông tin cá nhân
+        </div>
+
+        <div style="padding: 1.5rem;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="width: 80px; height: 80px; font-size: 2rem; margin: 0 auto;
+                           background: var(--primary-color); color: white;
+                           border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    @(Model.Name?.Substring(0, 1).ToUpper() ?? "U")
+                </div>
+                <h3 style="margin-top: 1rem;">@Model.Name</h3>
+                <p style="color: var(--text-light);">@Model.RoleName</p>
+                @if (!string.IsNullOrEmpty(Model.RollNumber))
+                {
+                    <p>Mã SV: <strong>@Model.RollNumber</strong></p>
+                }
+            </div>
+
+            <div style="display: grid; gap: 1rem;">
+                <div>
+                    <strong>Email:</strong><br />
+                    @Model.Email
+                </div>
+                <div>
+                    <strong>Số điện thoại:</strong><br />
+                    @(Model.Phone ?? "Chưa cập nhật")
+                </div>
+                <div>
+                    <strong>Địa chỉ:</strong><br />
+                    @(Model.Address ?? "Chưa cập nhật")
+                </div>
+                <div>
+                    <strong>Ngày sinh:</strong><br />
+                    @(Model.DateOfBirth?.ToString("dd/MM/yyyy") ?? "Chưa cập nhật")
+                </div>
+                <div>
+                    <strong>Giới tính:</strong><br />
+                    @(Model.Gender ?? "Chưa cập nhật")
+                </div>
+                @if (Model.ClassCode != null)
+                {
+                    <div>
+                        <strong>Lớp:</strong><br />
+                        @Model.ClassCode
+                    </div>
+                }
+                @if (Model.Batch.HasValue)
+                {
+                    <div>
+                        <strong>Niên khóa:</strong><br />
+                        @Model.Batch
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border-light); padding-top: 1rem; margin-top: 1rem;">
+            <button type="button" class="btn btn-primary" onclick="openEditModal()" style="width: 100%;">
+                <i class="bi bi-pencil"></i>
+                Chỉnh sửa
+            </button>
+        </div>
+    </div>
+
+    <!-- Ví điện tử -->
+    <div>
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-wallet2"></i>
+                Ví điện tử
+            </div>
+            <div style="text-align: center; padding: 2rem 0;">
+                <div style="font-size: 2.5rem; font-weight: bold; color: var(--accent-color);">
+                    @Model.WalletBalance.ToString("N0") đ
+                </div>
+                <p style="color: var(--text-light); margin-top: 0.5rem;">Số dư hiện tại</p>
+            </div>
+            <div style="border-top: 1px solid var(--border-light); padding-top: 1rem; margin-top: 1rem;">
+                <button class="btn btn-primary" style="width: 100%;">
+                    <i class="bi bi-plus-circle"></i>
+                    Nạp tiền
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-shield-check"></i>
+                Bảo mật
+            </div>
+            <div style="padding: 1.5rem;">
+                <p style="color: var(--text-light); margin-bottom: 1rem;">
+                    Quản lý mật khẩu và bảo mật tài khoản
+                </p>
+            </div>
+            <div style="border-top: 1px solid var(--border-light); padding-top: 1rem; margin-top: 1rem;">
+                <a href="#" class="btn btn-secondary" style="width: 100%;">
+                    <i class="bi bi-key"></i>
+                    Đổi mật khẩu
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Chỉnh sửa -->
+<div id="editModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+                           background: rgba(0,0,0,0.5); z-index: 2000; padding: 2rem;
+                           overflow-y: auto;">
+    <div class="card" style="max-width: 500px; margin: 2rem auto;">
+        <div class="card-header">Chỉnh sửa hồ sơ</div>
+        
+        <form method="post" asp-action="UpdateProfile" style="padding: 1.5rem;">
+            <div class="form-group">
+                <label class="form-label">Họ và tên</label>
+                <input type="text" class="form-input" name="Name" value="@Model.Name" required />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Số điện thoại</label>
+                <input type="tel" class="form-input" name="Phone" value="@Model.Phone" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Địa chỉ</label>
+                <input type="text" class="form-input" name="Address" value="@Model.Address" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Giới tính</label>
+                <select class="form-select" name="Gender">
+                    <option value="">-- Chọn --</option>
+                    <option value="Nam" selected="@(Model.Gender == "Nam")">Nam</option>
+                    <option value="Nữ" selected="@(Model.Gender == "Nữ")">Nữ</option>
+                    <option value="Khác" selected="@(Model.Gender == "Khác")">Khác</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Ngày sinh</label>
+                <input type="date" class="form-input" name="DateOfBirth" 
+                       value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")" />
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="button" class="btn btn-secondary" onclick="closeEditModal()" style="flex: 1;">
+                    Hủy
+                </button>
+                <button type="submit" class="btn btn-primary" style="flex: 1;">
+                    Lưu thay đổi
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openEditModal() {
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('editModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+}

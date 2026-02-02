@@ -1,0 +1,215 @@
+@model StudentManagement.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Manager Dashboard";
+}
+
+<!-- Manager Dashboard Header -->
+<div class="bg-gradient-to-r from-green-600 to-emerald-700 rounded-2xl shadow-lg text-white p-6 mb-8" data-aos="fade-up">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-bold mb-2">🎓 Phòng Đào Tạo</h1>
+            <p class="text-green-100">@Model.WelcomeMessage</p>
+        </div>
+        <div class="text-right">
+            <p class="text-sm text-green-200">Học kỳ hiện tại</p>
+            <p class="text-lg font-semibold">Fall 2025</p>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    @foreach (var stat in Model.Statistics)
+    {
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition-shadow duration-300" data-aos="fade-up" data-aos-delay="@(Model.Statistics.IndexOf(stat) * 100)">
+            <div class="flex items-center justify-between mb-4">
+                <div class="text-2xl">@stat.Icon</div>
+                <div class="text-sm font-medium text-@(stat.Color)-600 bg-@(stat.Color)-50 px-2 py-1 rounded-full">
+                    @stat.Change
+                </div>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-1">@stat.Value</h3>
+            <p class="text-gray-600 text-sm">@stat.Title</p>
+        </div>
+    }
+</div>
+
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <!-- Quick Actions -->
+    <div class="lg:col-span-2">
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6" data-aos="fade-right">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                🚀 Công việc hàng ngày
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @foreach (var action in Model.QuickActions)
+                {
+                    <a href="@action.ActionUrl" class="group">
+                        <div class="border-2 border-gray-100 rounded-xl p-4 hover:border-@(action.Color)-200 hover:bg-@(action.Color)-50 transition-all duration-300">
+                            <div class="flex items-center space-x-3">
+                                <div class="text-2xl">@action.Icon</div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-900 group-hover:text-@(action.Color)-700">@action.Title</h3>
+                                    <p class="text-sm text-gray-600 group-hover:text-@(action.Color)-600">@action.Description</p>
+                                </div>
+                                <div class="text-@(action.Color)-400 group-hover:text-@(action.Color)-600">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+        
+        <!-- Schedule Overview -->
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 mt-6" data-aos="fade-right" data-aos-delay="200">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                📅 Lịch trình tuần này
+            </h2>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                    <div class="flex items-center space-x-3">
+                        <div class="text-blue-600 font-semibold">T2</div>
+                        <div>
+                            <p class="font-medium text-gray-900">Họp khoa CNTT</p>
+                            <p class="text-sm text-gray-600">09:00 - 11:00</p>
+                        </div>
+                    </div>
+                    <div class="text-blue-600">📝</div>
+                </div>
+                
+                <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                    <div class="flex items-center space-x-3">
+                        <div class="text-green-600 font-semibold">T4</div>
+                        <div>
+                            <p class="font-medium text-gray-900">Kiểm tra chất lượng giảng dạy</p>
+                            <p class="text-sm text-gray-600">14:00 - 17:00</p>
+                        </div>
+                    </div>
+                    <div class="text-green-600">✅</div>
+                </div>
+                
+                <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                    <div class="flex items-center space-x-3">
+                        <div class="text-yellow-600 font-semibold">T6</div>
+                        <div>
+                            <p class="font-medium text-gray-900">Đánh giá cuối học kỳ</p>
+                            <p class="text-sm text-gray-600">08:00 - 12:00</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-600">⏰</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notifications & Pending Tasks -->
+    <div class="space-y-6">
+        <!-- Notifications -->
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6" data-aos="fade-left">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                🔔 Thông báo
+            </h2>
+            <div class="space-y-4">
+                @foreach (var notification in Model.Notifications)
+                {
+                    <div class="border-l-4 border-@(notification.Type == "success" ? "green" : notification.Type == "warning" ? "yellow" : notification.Type == "error" ? "red" : "blue")-400 bg-@(notification.Type == "success" ? "green" : notification.Type == "warning" ? "yellow" : notification.Type == "error" ? "red" : "blue")-50 p-4 rounded-r-lg">
+                        <h3 class="font-semibold text-gray-900">@notification.Title</h3>
+                        <p class="text-sm text-gray-600 mt-1">@notification.Message</p>
+                        <p class="text-xs text-gray-500 mt-2">@notification.CreatedAt.ToString("dd/MM HH:mm")</p>
+                    </div>
+                }
+            </div>
+        </div>
+        
+        <!-- Pending Approvals -->
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6" data-aos="fade-left" data-aos-delay="200">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                ⏳ Chờ xử lý
+            </h2>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 border border-orange-200 rounded-lg bg-orange-50">
+                    <div>
+                        <p class="font-medium text-gray-900">Đăng ký môn học</p>
+                        <p class="text-sm text-orange-600">15 đơn chờ duyệt</p>
+                    </div>
+                    <a href="/Enrollment/Pending" class="text-orange-600 hover:text-orange-700">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+                
+                <div class="flex items-center justify-between p-3 border border-blue-200 rounded-lg bg-blue-50">
+                    <div>
+                        <p class="font-medium text-gray-900">Mở lớp học mới</p>
+                        <p class="text-sm text-blue-600">3 yêu cầu</p>
+                    </div>
+                    <a href="/Class/Pending" class="text-blue-600 hover:text-blue-700">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+                
+                <div class="flex items-center justify-between p-3 border border-purple-200 rounded-lg bg-purple-50">
+                    <div>
+                        <p class="font-medium text-gray-900">Phúc khảo điểm</p>
+                        <p class="text-sm text-purple-600">8 đơn</p>
+                    </div>
+                    <a href="/Grade/Appeals" class="text-purple-600 hover:text-purple-700">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6" data-aos="fade-left" data-aos-delay="400">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                📊 Thống kê nhanh
+            </h2>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600">Lớp đang hoạt động</span>
+                    <span class="font-semibold text-green-600">128/150</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-green-600 h-2 rounded-full" style="width: 85%"></div>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600">Điểm danh trung bình</span>
+                    <span class="font-semibold text-blue-600">89.5%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-blue-600 h-2 rounded-full" style="width: 89%"></div>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600">Tỷ lệ đậu</span>
+                    <span class="font-semibold text-purple-600">92.3%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-purple-600 h-2 rounded-full" style="width: 92%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AOS Animation Script -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+</script>

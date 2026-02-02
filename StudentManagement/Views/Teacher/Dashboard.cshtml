@@ -1,0 +1,300 @@
+@{
+    ViewData["Title"] = "Bảng điều khiển - Giảng viên";
+}
+
+<!-- Welcome Message -->
+<div class="bg-gradient-to-r from-orange-50 to-red-100 dark:from-orange-900/20 dark:to-red-900/20 rounded-2xl p-8 mb-8" data-aos="fade-up">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                Chào mừng, Giảng viên Lê Cường! 👨‍🏫
+            </h1>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-4">
+                Email: <span class="font-mono text-orange-600 dark:text-orange-400">cuongl@fpt.edu.vn</span>
+            </p>
+            <div class="flex items-center space-x-6">
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                    <span class="font-medium">Khoa:</span>
+                    <span class="text-orange-600 dark:text-orange-400 font-bold ml-1">Công nghệ Thông tin</span>
+                </div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                    <span class="font-medium">Kinh nghiệm:</span>
+                    <span class="text-red-600 dark:text-red-400 font-bold ml-1">5+ năm</span>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:block">
+            <div class="w-24 h-24 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
+                <i data-lucide="user-check" class="w-12 h-12 text-orange-600 dark:text-orange-400"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="100">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Lớp đang dạy</p>
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">3</p>
+                <p class="text-sm text-orange-600 dark:text-orange-400">Kỳ Summer 2025</p>
+            </div>
+            <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center">
+                <i data-lucide="school" class="w-6 h-6 text-orange-600 dark:text-orange-400"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="200">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Tổng sinh viên</p>
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">87</p>
+                <p class="text-sm text-blue-600 dark:text-blue-400">Đang theo học</p>
+            </div>
+            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                <i data-lucide="users" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="300">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Điểm chờ nhập</p>
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">24</p>
+                <p class="text-sm text-red-600 dark:text-red-400">Cần xử lý</p>
+            </div>
+            <div class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center">
+                <i data-lucide="edit" class="w-6 h-6 text-red-600 dark:text-red-400"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="400">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Môn học</p>
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">4</p>
+                <p class="text-sm text-purple-600 dark:text-purple-400">Đang phụ trách</p>
+            </div>
+            <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
+                <i data-lucide="book-open" class="w-6 h-6 text-purple-600 dark:text-purple-400"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Today's Classes & Recent Activity -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <!-- Today's Classes -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="100">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Lịch dạy hôm nay</h3>
+            <a href="@Url.Action("Schedule", "Teacher")" class="text-orange-500 hover:text-orange-600 text-sm font-medium">Xem toàn bộ</a>
+        </div>
+        
+        <div class="space-y-4">
+            <div class="flex items-center p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border-l-4 border-orange-500">
+                <div class="flex-shrink-0 w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center">
+                    <i data-lucide="clock" class="w-6 h-6 text-orange-600 dark:text-orange-400"></i>
+                </div>
+                <div class="ml-4 flex-1">
+                    <h4 class="text-sm font-medium text-gray-900 dark:text-white">Data Structures and Algorithms</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">CSD201 - Slot 2 (09:15 - 10:45)</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-500">Phòng AL-R302 - 30 sinh viên</p>
+                </div>
+                <div class="text-sm font-medium text-orange-600 dark:text-orange-400">Đang dạy</div>
+            </div>
+
+            <div class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <div class="flex-shrink-0 w-12 h-12 bg-gray-100 dark:bg-gray-600 rounded-lg flex items-center justify-center">
+                    <i data-lucide="clock" class="w-6 h-6 text-gray-500 dark:text-gray-400"></i>
+                </div>
+                <div class="ml-4 flex-1">
+                    <h4 class="text-sm font-medium text-gray-900 dark:text-white">Object-Oriented Programming</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">PRO192 - Slot 4 (13:30 - 15:00)</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-500">Phòng BE-R205 - 28 sinh viên</p>
+                </div>
+                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Sắp tới</div>
+            </div>
+
+            <div class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <div class="flex-shrink-0 w-12 h-12 bg-gray-100 dark:bg-gray-600 rounded-lg flex items-center justify-center">
+                    <i data-lucide="clock" class="w-6 h-6 text-gray-500 dark:text-gray-400"></i>
+                </div>
+                <div class="ml-4 flex-1">
+                    <h4 class="text-sm font-medium text-gray-900 dark:text-white">Programming Fundamentals</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">PRF192 - Slot 6 (17:00 - 18:30)</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-500">Phòng AL-R101 - 29 sinh viên</p>
+                </div>
+                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Tối nay</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="200">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Hoạt động gần đây</h3>
+            <a href="#" class="text-orange-500 hover:text-orange-600 text-sm font-medium">Xem tất cả</a>
+        </div>
+        
+        <div class="space-y-4">
+            <div class="flex items-center space-x-4 p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                <div class="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-900 dark:text-white">Đã nhập điểm giữa kỳ</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">PRO192 - 28 sinh viên</p>
+                </div>
+                <span class="text-sm text-gray-500 dark:text-gray-400">1h trước</span>
+            </div>
+
+            <div class="flex items-center space-x-4 p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="user-plus" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-900 dark:text-white">Sinh viên mới đăng ký</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">CSD201 - Nguyễn Văn A</p>
+                </div>
+                <span class="text-sm text-gray-500 dark:text-gray-400">2h trước</span>
+            </div>
+
+            <div class="flex items-center space-x-4 p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="clipboard-list" class="w-5 h-5 text-purple-600 dark:text-purple-400"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-900 dark:text-white">Hoàn thành điểm danh</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">PRF192 - Buổi 15</p>
+                </div>
+                <span class="text-sm text-gray-500 dark:text-gray-400">1 ngày</span>
+            </div>
+
+            <div class="flex items-center space-x-4 p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                <div class="w-10 h-10 bg-yellow-100 dark:bg-yellow-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="file-text" class="w-5 h-5 text-yellow-600 dark:text-yellow-400"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-900 dark:text-white">Báo cáo học tập</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Đã tạo báo cáo tháng 7</p>
+                </div>
+                <span class="text-sm text-gray-500 dark:text-gray-400">2 ngày</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Class Performance & Quick Actions -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Class Performance Chart -->
+    <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="100">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Thống kê lớp học</h3>
+            <a href="@Url.Action("ClassStatistics", "Teacher")" class="text-orange-500 hover:text-orange-600 text-sm font-medium">Chi tiết</a>
+        </div>
+        
+        <div class="h-80">
+            <canvas id="classPerformanceChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="200">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Thao tác nhanh</h3>
+        
+        <div class="space-y-3">
+            <a href="@Url.Action("GradeEntry", "Teacher")" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors group">
+                <div class="w-10 h-10 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center group-hover:bg-red-200 dark:group-hover:bg-red-800">
+                    <i data-lucide="edit" class="w-5 h-5 text-red-600 dark:text-red-400"></i>
+                </div>
+                <div>
+                    <p class="font-medium text-gray-900 dark:text-white">Nhập điểm</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">24 điểm chờ xử lý</p>
+                </div>
+            </a>
+
+            <a href="@Url.Action("Attendance", "Teacher")" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors group">
+                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-800">
+                    <i data-lucide="clipboard-list" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
+                </div>
+                <div>
+                    <p class="font-medium text-gray-900 dark:text-white">Điểm danh</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Lớp hôm nay</p>
+                </div>
+            </a>
+
+            <a href="@Url.Action("StudentList", "Teacher")" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors group">
+                <div class="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center group-hover:bg-green-200 dark:group-hover:bg-green-800">
+                    <i data-lucide="users" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
+                </div>
+                <div>
+                    <p class="font-medium text-gray-900 dark:text-white">Danh sách SV</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">87 sinh viên</p>
+                </div>
+            </a>
+
+            <a href="@Url.Action("Reports", "Teacher")" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors group">
+                <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center group-hover:bg-purple-200 dark:group-hover:bg-purple-800">
+                    <i data-lucide="file-text" class="w-5 h-5 text-purple-600 dark:text-purple-400"></i>
+                </div>
+                <div>
+                    <p class="font-medium text-gray-900 dark:text-white">Báo cáo</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Tạo báo cáo mới</p>
+                </div>
+            </a>
+
+            <a href="@Url.Action("AIAnalysis", "Teacher")" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors group">
+                <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center group-hover:bg-indigo-200 dark:group-hover:bg-indigo-800">
+                    <i data-lucide="brain" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
+                </div>
+                <div>
+                    <p class="font-medium text-gray-900 dark:text-white">Phân tích AI</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Xu hướng học tập</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Class Performance Chart
+        const ctx = document.getElementById('classPerformanceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Giỏi (≥8.5)', 'Khá (7.0-8.4)', 'Trung bình (5.5-6.9)', 'Yếu (<5.5)'],
+                datasets: [{
+                    data: [25, 35, 20, 7],
+                    backgroundColor: [
+                        '#22C55E',
+                        '#3B82F6', 
+                        '#F59E0B',
+                        '#EF4444'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+    </script>
+}

@@ -1,0 +1,79 @@
+@model StudentManagement.BLL.Services.DTOs.UserDTO
+
+@{
+    ViewData["Title"] = "Dashboard Manager";
+}
+
+<div style="margin-top: 2rem;">
+    <!-- Welcome Card -->
+    <div class="card" style="background: linear-gradient(135deg, var(--success), #229954); 
+                              color: white; margin-bottom: 2rem;">
+        <div class="card-body" style="padding: 2rem;">
+            <h2 style="margin: 0; margin-bottom: 0.5rem;">
+                <i class="bi bi-clipboard-check"></i>
+                Chào mừng, @Model.Name!
+            </h2>
+            <p style="margin: 0; opacity: 0.9;">Bạn đang ở vị trí Manager - Quản lý tài chính & nhân sự</p>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="row three-col">
+        <div class="card">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="font-size: 2.5rem; color: var(--info);">
+                    <i class="bi bi-people"></i>
+                </div>
+                <div>
+                    <p style="color: var(--text-light); margin: 0; font-size: 0.9rem;">Tổng sinh viên</p>
+                    <h3 style="margin: 0; color: var(--text-dark);">--</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="font-size: 2.5rem; color: var(--accent-color);">
+                    <i class="bi bi-graph-up"></i>
+                </div>
+                <div>
+                    <p style="color: var(--text-light); margin: 0; font-size: 0.9rem;">Doanh thu</p>
+                    <h3 style="margin: 0; color: var(--text-dark);">-- đ</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="font-size: 2.5rem; color: var(--warning);">
+                    <i class="bi bi-exclamation-triangle"></i>
+                </div>
+                <div>
+                    <p style="color: var(--text-light); margin: 0; font-size: 0.9rem;">Nợ học phí</p>
+                    <h3 style="margin: 0; color: var(--text-dark);">-- đ</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card" style="margin-top: 2rem;">
+        <div class="card-header">
+            <i class="bi bi-lightning-fill"></i>
+            Công cụ quản lý
+        </div>
+        <div class="card-body">
+            <div class="row three-col" style="gap: 1rem;">
+                <a href="#" class="btn btn-primary" style="text-align: center;">
+                    <i class="bi bi-people"></i> Xem Sinh Viên
+                </a>
+                <a href="#" class="btn btn-primary" style="text-align: center;">
+                    <i class="bi bi-file-earmark"></i> Báo Cáo Tài Chính
+                </a>
+                <a href="#" class="btn btn-primary" style="text-align: center;">
+                    <i class="bi bi-graph-up"></i> Thống Kê
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,170 @@
+@model StudentManagement.BLL.Services.DTOs.LoginDTO
+
+@{
+    ViewData["Title"] = "Đăng Nhập";
+}
+
+<div class="row two-col" style="margin-top: 2rem; max-width: 1000px; margin-left: auto; margin-right: auto;">
+    <!-- ===== HERO SECTION (Bên Trái) ===== -->
+    <div style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+                border-radius: var(--border-radius-lg); padding: 3rem; 
+                display: flex; flex-direction: column; justify-content: center; 
+                align-items: center; text-align: center; min-height: 450px; color: white; position: relative; overflow: hidden;">
+        
+        <!-- Floating Background Elements -->
+        <div style="position: absolute; width: 300px; height: 300px; border-radius: 50%; 
+                    background: rgba(255, 255, 255, 0.05); top: -100px; right: -100px; 
+                    animation: float 6s ease-in-out infinite;"></div>
+        <div style="position: absolute; width: 200px; height: 200px; border-radius: 50%; 
+                    background: rgba(255, 140, 66, 0.1); bottom: -50px; left: -50px; 
+                    animation: float 8s ease-in-out infinite; animation-delay: 1s;"></div>
+
+        <!-- Content -->
+        <div style="position: relative; z-index: 10;">
+            <div style="font-size: 4rem; margin-bottom: 1.5rem; color: var(--accent-color);">
+                <i class="bi bi-box-arrow-in-right"></i>
+            </div>
+            <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+                Chào Mừng Trở Lại
+            </h1>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.95; line-height: 1.8;">
+                Đăng nhập để tiếp tục quản lý khóa học, điểm số và hồ sơ học tập của bạn
+            </p>
+            <p style="font-size: 0.9rem; opacity: 0.8;">
+                <i class="bi bi-shield-check" style="margin-right: 0.5rem;"></i>
+                Tài khoản của bạn được bảo vệ 100%
+            </p>
+        </div>
+    </div>
+
+    <!-- ===== FORM SECTION (Bên Phải) ===== -->
+    <div class="card">
+        <div class="card-header">
+            <i class="bi bi-person-lock" style="margin-right: 0.5rem;"></i>
+            Đăng Nhập Tài Khoản
+        </div>
+
+        <form method="post" asp-action="Login" asp-controller="Auth" style="padding: 1.5rem;">
+            
+            <!-- Validation Summary -->
+            @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Count > 0)
+            {
+                <div class="alert alert-danger" role="alert" style="margin-bottom: 1.5rem;">
+                    <i class="bi bi-exclamation-circle"></i>
+                    <strong style="margin-left: 0.5rem;">Kiểm tra lại thông tin:</strong>
+                    @Html.ValidationSummary(false)
+                </div>
+            }
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <label class="form-label" for="Email">
+                    <i class="bi bi-envelope-at" style="color: var(--primary-color); margin-right: 0.5rem;"></i>
+                    Địa chỉ Email
+                </label>
+                <input type="email" 
+                       class="form-input" 
+                       id="Email" 
+                       name="Email" 
+                       placeholder="you@example.com" 
+                       required 
+                       asp-for="Email" 
+                       style="transition: all 0.3s ease;" />
+                <span class="form-error" style="color: var(--danger);">@Html.ValidationMessageFor(m => m.Email)</span>
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label class="form-label" for="Password">
+                    <i class="bi bi-lock" style="color: var(--primary-color); margin-right: 0.5rem;"></i>
+                    Mật Khẩu
+                </label>
+                <input type="password" 
+                       class="form-input" 
+                       id="Password" 
+                       name="Password" 
+                       placeholder="••••••••" 
+                       required 
+                       asp-for="Password" 
+                       style="transition: all 0.3s ease;" />
+                <span class="form-error" style="color: var(--danger);">@Html.ValidationMessageFor(m => m.Password)</span>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="form-group" style="flex-direction: row; align-items: center; margin-bottom: 2rem;">
+                <input type="checkbox" id="RememberMe" name="RememberMe" asp-for="RememberMe" style="cursor: pointer; margin-right: 0.5rem;" />
+                <label for="RememberMe" style="margin: 0; cursor: pointer; font-weight: 500;">
+                    Ghi nhớ tôi trong 30 ngày
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1rem; font-weight: 600;">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span style="margin-left: 0.5rem;">Đăng Nhập</span>
+            </button>
+
+            <!-- Divider -->
+            <div style="margin: 1.5rem 0; text-align: center; color: var(--text-light);">
+                <span style="font-size: 0.85rem;">hoặc</span>
+            </div>
+
+            <!-- Links -->
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <a href="/Auth/Register" class="btn btn-secondary" style="width: 100%; text-align: center;">
+                    <i class="bi bi-person-plus"></i>
+                    <span style="margin-left: 0.5rem;">Tạo tài khoản mới</span>
+                </a>
+                <a href="#" style="text-align: center; color: var(--primary-color); text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: all 0.3s ease;"
+                   onmouseover="this.style.color = 'var(--accent-color)'"
+                   onmouseout="this.style.color = 'var(--primary-color)'">
+                    <i class="bi bi-question-circle"></i>
+                    <span style="margin-left: 0.3rem;">Quên mật khẩu?</span>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ===== FEATURES INFO (Dưới form) ===== -->
+<section style="margin-top: 3rem; padding: 2rem; background: white; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-soft);">
+    <h3 style="text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem; color: var(--primary-color);">
+        <i class="bi bi-shield-lock" style="color: var(--accent-color); margin-right: 0.5rem;"></i>
+        Tại sao chọn StudentMS?
+    </h3>
+    
+    <div class="row three-col">
+        <div style="text-align: center;">
+            <div style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem;">
+                <i class="bi bi-lightning-charge"></i>
+            </div>
+            <h4 style="margin-bottom: 0.5rem; color: var(--text-dark);">Nhanh Chóng</h4>
+            <p style="color: var(--text-light); font-size: 0.9rem;">
+                Truy cập thông tin của bạn trong vài giây
+            </p>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 1rem;">
+                <i class="bi bi-shield-check"></i>
+            </div>
+            <h4 style="margin-bottom: 0.5rem; color: var(--text-dark);">An Toàn</h4>
+            <p style="color: var(--text-light); font-size: 0.9rem;">
+                Dữ liệu được mã hóa và bảo vệ
+            </p>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-size: 2.5rem; color: var(--info); margin-bottom: 1rem;">
+                <i class="bi bi-graph-up-arrow"></i>
+            </div>
+            <h4 style="margin-bottom: 0.5rem; color: var(--text-dark);">Hiệu Quả</h4>
+            <p style="color: var(--text-light); font-size: 0.9rem;">
+                Quản lý học tập hiệu quả hơn
+            </p>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

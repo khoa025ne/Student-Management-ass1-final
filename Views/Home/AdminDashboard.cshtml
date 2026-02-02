@@ -1,0 +1,79 @@
+@model StudentManagement.BLL.Services.DTOs.UserDTO
+
+@{
+    ViewData["Title"] = "Dashboard Admin";
+}
+
+<div style="margin-top: 2rem;">
+    <!-- Welcome Card -->
+    <div class="card" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); 
+                              color: white; margin-bottom: 2rem;">
+        <div style="padding: 2rem;">
+            <h2 style="margin: 0; margin-bottom: 0.5rem;">
+                <i class="bi bi-shield-lock"></i>
+                Chào mừng, @Model.Name!
+            </h2>
+            <p style="margin: 0; opacity: 0.9;">Bạn đang ở vị trí Admin - Có toàn quyền quản lý hệ thống</p>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="row three-col">
+        <div class="card">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="font-size: 2.5rem; color: var(--primary-color);">
+                    <i class="bi bi-people"></i>
+                </div>
+                <div>
+                    <p style="color: var(--text-light); margin: 0; font-size: 0.9rem;">Tổng tài khoản</p>
+                    <h3 style="margin: 0; color: var(--text-dark);">--</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="font-size: 2.5rem; color: var(--accent-color);">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div>
+                    <p style="color: var(--text-light); margin: 0; font-size: 0.9rem;">Tổng môn học</p>
+                    <h3 style="margin: 0; color: var(--text-dark);">--</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="font-size: 2.5rem; color: var(--success);">
+                    <i class="bi bi-building"></i>
+                </div>
+                <div>
+                    <p style="color: var(--text-light); margin: 0; font-size: 0.9rem;">Tổng lớp học</p>
+                    <h3 style="margin: 0; color: var(--text-dark);">--</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card" style="margin-top: 2rem;">
+        <div class="card-header">
+            <i class="bi bi-lightning-fill"></i>
+            Hành động nhanh
+        </div>
+        <div style="padding: 1.5rem;">
+            <div class="row three-col" style="gap: 1rem;">
+                <a href="/Account/ManageAccounts" class="btn btn-primary" style="text-align: center;">
+                    <i class="bi bi-people"></i> Quản Lý Tài Khoản
+                </a>
+                <a href="#" class="btn btn-primary" style="text-align: center;">
+                    <i class="bi bi-book"></i> Quản Lý Môn Học
+                </a>
+                <a href="#" class="btn btn-primary" style="text-align: center;">
+                    <i class="bi bi-building"></i> Quản Lý Lớp Học
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

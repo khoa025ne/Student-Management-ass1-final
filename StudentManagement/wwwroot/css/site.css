@@ -1,0 +1,117 @@
+/* --- GOOGLE FONTS IMPORT --- */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+/* --- BIẾN TOÀN CỤC (VARIABLES) --- */
+:root {
+    --fpt-orange: #F26F21;
+    --fpt-orange-light: #fff0e6;
+    --fpt-navy: #1A2B48;
+    --fpt-navy-light: #2d4a7c;
+    --bg-soft: #F8FAFC;
+    --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    --border-radius-lg: 24px;
+    --border-radius-md: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- HỆ THỐNG CƠ BẢN (GIỮ LẠI CỦA BẠN) --- */
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html { font-size: 16px; }
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: 'Plus Jakarta Sans', sans-serif; /* Font hiện đại hơn */
+    background-color: var(--bg-soft);
+    color: var(--fpt-navy);
+    overflow-x: hidden;
+}
+
+/* --- TÙY CHỈNH FOCUS (GỌN HƠN) --- */
+.btn:focus, .form-control:focus {
+    box-shadow: 0 0 0 4px rgba(242, 111, 33, 0.15);
+    border-color: var(--fpt-orange);
+}
+
+/* --- HERO SECTION --- */
+.hero-section {
+    padding: 80px 0 120px 0;
+    background: radial-gradient(circle at 90% 10%, #fff5f0 0%, #ffffff 100%);
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem); /* Responsive font size */
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
+}
+
+.text-orange { color: var(--fpt-orange); }
+
+/* --- BUTTONS (DRIBBBLE STYLE) --- */
+.btn-primary-custom {
+    background: var(--fpt-orange);
+    color: white;
+    padding: 14px 30px;
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    border: none;
+    transition: var(--transition);
+    box-shadow: 0 10px 20px rgba(242, 111, 33, 0.2);
+}
+
+.btn-primary-custom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(242, 111, 33, 0.3);
+    background: #e05d10;
+    color: white;
+}
+
+/* --- FEATURE CARDS --- */
+.feature-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: var(--border-radius-lg);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: var(--transition);
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--card-shadow);
+    border-color: var(--fpt-orange-light);
+}
+
+.feature-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    background: var(--fpt-orange-light);
+    color: var(--fpt-orange);
+}
+
+/* --- STATS CARD --- */
+.stat-box {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    text-align: center;
+    border: 1px solid #f1f5f9;
+}
+
+/* --- UTILITIES --- */
+.rounded-4 { border-radius: var(--border-radius-md) !important; }
+.rounded-5 { border-radius: var(--border-radius-lg) !important; }

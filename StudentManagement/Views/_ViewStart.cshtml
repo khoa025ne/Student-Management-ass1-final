@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "_Layout";
+    
+    // Xác định layout dựa trên controller
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    if (controller == "Student")
+    {
+        Layout = "_StudentLayout";
+    }
+    else if (controller == "Teacher")
+    {
+        Layout = "_TeacherLayout";
+    }
+}

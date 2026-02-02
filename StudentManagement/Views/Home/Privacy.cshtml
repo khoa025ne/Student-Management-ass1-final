@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Chính sách bảo mật";
+}
+
+<section class="py-5">
+    <div class="container">
+        <div class="bg-white p-5 rounded-5 shadow-sm border">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/" class="text-orange">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Privacy</li>
+                </ol>
+            </nav>
+            
+            <h1 class="fw-bold display-6 mb-4">@ViewData["Title"]</h1>
+            
+            <div class="content-text text-muted" style="line-height: 1.8;">
+                <p class="lead">Hệ thống FPT luôn ưu tiên bảo mật thông tin cá nhân của sinh viên.</p>
+                <hr class="my-4 opacity-25">
+                
+                <h4 class="text-dark fw-bold"><i class="fas fa-user-shield me-2 text-orange"></i>Dữ liệu thu thập</h4>
+                <p>Chúng tôi chỉ lưu trữ các thông tin cần thiết cho mục đích quản lý học vụ bao gồm: Mã số sinh viên (RollNumber), điểm số và lịch sử giao dịch ví.</p>
+                
+                <h4 class="text-dark fw-bold mt-4"><i class="fas fa-robot me-2 text-orange"></i>Xử lý bằng AI</h4>
+                <p>Dữ liệu học tập của bạn khi gửi qua OpenAI để phân tích sẽ được ẩn danh hóa để đảm bảo tính riêng tư cá nhân.</p>
+            </div>
+        </div>
+    </div>
+</section>

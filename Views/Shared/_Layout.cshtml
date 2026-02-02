@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Hệ thống quản lý sinh viên FPT</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+    
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="~/css/site.css" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <!-- NAVIGATION BAR - Minimalist Academic Style -->
+    <nav class="navbar">
+        <!-- Logo & Brand -->
+        <a class="navbar-brand" href="/" title="Trang chủ">
+            <i class="bi bi-mortarboard" style="font-size: 1.8rem;"></i>
+            <span style="font-size: 1.2rem; margin-left: 0.5rem;">StudentMS</span>
+        </a>
+
+        <!-- Menu giữa -->
+        <ul class="navbar-menu">
+            <li><a href="/" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
+                <i class="bi bi-house"></i> Trang chủ
+            </a></li>
+            <li><a href="/#features">
+                <i class="bi bi-star"></i> Tính năng
+            </a></li>
+            @if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserRole")))
+            {
+                @if (HttpContext.Session.GetString("UserRole") == "Admin")
+                {
+                    <li><a href="/User/Index">
+                        <i class="bi bi-people"></i> Quản lý người dùng
+                    </a></li>
+                }
+            }
+        </ul>
+
+        <!-- User Profile & Actions -->
+        <div class="navbar-user">
+            @if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
+            {
+                <!-- Wallet Badge -->
+                <div class="wallet-badge" title="Số dư ví điện tử">
+                    <i class="bi bi-wallet2" style="margin-right: 0.3rem;"></i>
+                    <span id="walletBalance" style="font-variant-numeric: tabular-nums;">
+                        @(HttpContext.Session.GetString("WalletBalance") ?? "0") đ
+                    </span>
+                </div>
+
+                <!-- User Info -->
+                <div class="navbar-user-info">
+                    <div class="navbar-user-name">
+                        <i class="bi bi-person-circle" style="margin-right: 0.3rem;"></i>
+                        @HttpContext.Session.GetString("UserName")
+                    </div>
+                    <div class="navbar-user-role">
+                        @(HttpContext.Session.GetString("UserRole") ?? "User")
+                    </div>
+                </div>
+
+                <!-- Avatar -->
+                <div class="navbar-avatar" 
+                     title="@HttpContext.Session.GetString("UserName")"
+                     style="cursor: pointer; background: linear-gradient(135deg, var(--primary-color), var(--accent-color));">
+                    @(HttpContext.Session.GetString("UserName")?.Substring(0, 1).ToUpper() ?? "U")
+                </div>
+
+                <!-- Logout Button -->
+                <a href="/Auth/Logout" class="btn btn-secondary btn-sm" title="Đăng xuất">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span style="margin-left: 0.3rem;">Đăng xuất</span>
+                </a>
+            }
+            else
+            {
+                <!-- Login & Register Buttons -->
+                <a href="/Auth/Login" class="btn btn-primary" title="Đăng nhập vào hệ thống">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    <span style="margin-left: 0.3rem;">Đăng nhập</span>
+                </a>
+                <a href="/Auth/Register" class="btn btn-secondary" title="Tạo tài khoản mới">
+                    <i class="bi bi-person-plus"></i>
+                    <span style="margin-left: 0.3rem;">Đăng ký</span>
+                </a>
+            }
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+        <!-- Success Alert -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success" role="alert" style="animation: slideInDown 0.5s ease-out;">
+                <i class="bi bi-check-circle"></i>
+                <strong style="margin-left: 0.5rem;">Thành công!</strong> @TempData["SuccessMessage"]
+            </div>
+        }
+
+        <!-- Error Alert -->
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger" role="alert" style="animation: slideInDown 0.5s ease-out;">
+                <i class="bi bi-exclamation-circle"></i>
+                <strong style="margin-left: 0.5rem;">Lỗi!</strong> @TempData["ErrorMessage"]
+            </div>
+        }
+
+        @RenderBody()
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="background: var(--primary-color); color: white; text-align: center; padding: 2rem; margin-top: 4rem;">
+        <div class="container">
+            <p style="margin: 0.5rem 0;">
+                <i class="bi bi-c-circle"></i> 2026 Hệ Thống Quản Lý Sinh Viên FPT. All rights reserved.
+            </p>
+            <p style="margin: 0.5rem 0; font-size: 0.85rem; opacity: 0.8;">
+                Phát triển bằng ASP.NET Core & EF Core | Thiết kế Minimalist Academic
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <!-- Global JS -->
+    <script>
+        // Auto-hide alerts sau 5 giây
+        document.querySelectorAll('.alert').forEach(alert => {
+            setTimeout(() => {
+                alert.style.animation = 'fadeOutUp 0.5s ease-out forwards';
+                setTimeout(() => alert.remove(), 500);
+            }, 5000);
+        });
+
+        // Parallax effect cho hero banner
+        document.addEventListener('mousemove', (e) => {
+            const parallaxElements = document.querySelectorAll('.hero-floating');
+            parallaxElements.forEach((element, index) => {
+                const x = (e.clientX / window.innerWidth) * 10 - 5;
+                const y = (e.clientY / window.innerHeight) * 10 - 5;
+                element.style.transform = `translate(${x * (index + 1)}px, ${y * (index + 1)}px)`;
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add fadeOutUp animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOutUp {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(-20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

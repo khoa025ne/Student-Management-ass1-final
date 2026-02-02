@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+
+namespace StudentManagement.DAL.Entities
+{
+    /// <summary>
+    /// Định nghĩa các vai trò trong hệ thống (Admin, Manager, Student, Teacher)
+    /// 
+    /// ⚠️ CHÚ Ý: Phân quyền được quản lý bằng LOGIC (RolePermissionConfig), 
+    /// KHÔNG lưu trữ trong database
+    /// </summary>
+    public class Role
+    {
+        public int RoleId { get; set; }
+
+        /// <summary>
+        /// Tên vai trò: Admin, Manager, Student, Teacher
+        /// </summary>
+        public string Name { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Mô tả vai trò
+        /// </summary>
+        public string Description { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Trạng thái: 1 = Active, 0 = Inactive
+        /// </summary>
+        public int? Status { get; set; } = 1; // ✅ MỚI THÊM
+
+        /// <summary>
+        /// Ngày tạo
+        /// </summary>
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        /// <summary>
+        /// Ngày cập nhật lần cuối
+        /// </summary>
+        public DateTime? UpdatedAt { get; set; } // ✅ MỚI THÊM
+
+        /// <summary>
+        /// Navigation: Danh sách người dùng có vai trò này
+        /// </summary>
+        public ICollection<User> Users { get; set; } = new HashSet<User>();
+    }
+}

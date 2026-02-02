@@ -1,0 +1,173 @@
+@model StudentManagement.ViewModels.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<!-- Admin Dashboard Header -->
+<div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-lg text-white p-6 mb-8" data-aos="fade-up">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-bold mb-2">🛠️ Admin Dashboard</h1>
+            <p class="text-blue-100">@Model.WelcomeMessage</p>
+        </div>
+        <div class="text-right">
+            <p class="text-sm text-blue-200">Thời gian truy cập</p>
+            <p class="text-lg font-semibold">@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</p>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    @foreach (var stat in Model.Statistics)
+    {
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition-shadow duration-300" data-aos="fade-up" data-aos-delay="@(Model.Statistics.IndexOf(stat) * 100)">
+            <div class="flex items-center justify-between mb-4">
+                <div class="text-2xl">@stat.Icon</div>
+                <div class="text-sm font-medium text-@(stat.Color)-600 bg-@(stat.Color)-50 px-2 py-1 rounded-full">
+                    @stat.Change
+                </div>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-1">@stat.Value</h3>
+            <p class="text-gray-600 text-sm">@stat.Title</p>
+        </div>
+    }
+</div>
+
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <!-- Quick Actions -->
+    <div class="lg:col-span-2">
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6" data-aos="fade-right">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                ⚡ Hành động nhanh
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @foreach (var action in Model.QuickActions)
+                {
+                    <a href="@action.ActionUrl" class="group">
+                        <div class="border-2 border-gray-100 rounded-xl p-4 hover:border-@(action.Color)-200 hover:bg-@(action.Color)-50 transition-all duration-300">
+                            <div class="flex items-center space-x-3">
+                                <div class="text-2xl">@action.Icon</div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-900 group-hover:text-@(action.Color)-700">@action.Title</h3>
+                                    <p class="text-sm text-gray-600 group-hover:text-@(action.Color)-600">@action.Description</p>
+                                </div>
+                                <div class="text-@(action.Color)-400 group-hover:text-@(action.Color)-600">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+        
+        <!-- Recent Activity -->
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 mt-6" data-aos="fade-right" data-aos-delay="200">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                📈 Hoạt động gần đây
+            </h2>
+            <div class="space-y-4">
+                <div class="flex items-center space-x-4 p-3 bg-green-50 rounded-lg">
+                    <div class="text-green-600">✅</div>
+                    <div class="flex-1">
+                        <p class="font-medium text-gray-900">Người dùng mới đăng ký</p>
+                        <p class="text-sm text-gray-600">Nguyễn Văn A - SE180456 vừa tạo tài khoản</p>
+                    </div>
+                    <div class="text-sm text-gray-500">5 phút trước</div>
+                </div>
+                
+                <div class="flex items-center space-x-4 p-3 bg-blue-50 rounded-lg">
+                    <div class="text-blue-600">💰</div>
+                    <div class="flex-1">
+                        <p class="font-medium text-gray-900">Giao dịch thanh toán</p>
+                        <p class="text-sm text-gray-600">Trần Thị B nạp 5,000,000 VND vào ví</p>
+                    </div>
+                    <div class="text-sm text-gray-500">15 phút trước</div>
+                </div>
+                
+                <div class="flex items-center space-x-4 p-3 bg-purple-50 rounded-lg">
+                    <div class="text-purple-600">📚</div>
+                    <div class="flex-1">
+                        <p class="font-medium text-gray-900">Lớp học mới</p>
+                        <p class="text-sm text-gray-600">Lớp SWP391-SE1802 đã được tạo</p>
+                    </div>
+                    <div class="text-sm text-gray-500">1 giờ trước</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notifications & System Status -->
+    <div class="space-y-6">
+        <!-- Notifications -->
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6" data-aos="fade-left">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                🔔 Thông báo hệ thống
+            </h2>
+            <div class="space-y-4">
+                @foreach (var notification in Model.Notifications)
+                {
+                    <div class="border-l-4 border-@(notification.Type == "success" ? "green" : notification.Type == "warning" ? "yellow" : notification.Type == "error" ? "red" : "blue")-400 bg-@(notification.Type == "success" ? "green" : notification.Type == "warning" ? "yellow" : notification.Type == "error" ? "red" : "blue")-50 p-4 rounded-r-lg">
+                        <h3 class="font-semibold text-gray-900">@notification.Title</h3>
+                        <p class="text-sm text-gray-600 mt-1">@notification.Message</p>
+                        <p class="text-xs text-gray-500 mt-2">@notification.CreatedAt.ToString("dd/MM HH:mm")</p>
+                    </div>
+                }
+            </div>
+        </div>
+        
+        <!-- System Status -->
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6" data-aos="fade-left" data-aos-delay="200">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                ⚙️ Trạng thái hệ thống
+            </h2>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600">Database</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span class="text-sm font-medium text-green-600">Hoạt động</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600">Server Load</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
+                        <span class="text-sm font-medium text-yellow-600">Trung bình</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600">Backup</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span class="text-sm font-medium text-green-600">Hoàn tất</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600">Security</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span class="text-sm font-medium text-green-600">Bảo mật</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AOS Animation Script -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+</script>

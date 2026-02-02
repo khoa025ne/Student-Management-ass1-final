@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FPT Student Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#F0F4FF',
+                            100: '#E5EDFF',
+                            200: '#D1DFFF',
+                            300: '#B8CBFF',
+                            400: '#A0B3FF',
+                            500: '#465FFF',
+                            600: '#3B4FE6',
+                            700: '#3041CC',
+                            800: '#2633B3',
+                            900: '#1C2599',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            transition: width 0.3s ease;
+        }
+        .sidebar.collapsed {
+            width: 80px;
+        }
+        .sidebar.collapsed .sidebar-text {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+        .sidebar.collapsed .sidebar-logo {
+            justify-content: center;
+        }
+        .sidebar.collapsed .sidebar-collapse-icon {
+            transform: rotate(180deg);
+        }
+        .lg\:pl-64.sidebar-collapsed {
+            padding-left: 80px;
+        }
+        .sidebar.collapsed .nav-text {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+        .nav-text {
+            transition: all 0.3s ease;
+        }
+        .sidebar.collapsed [data-tooltip]:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            white-space: nowrap;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        /* Responsive */
+        .sidebar-mobile .sidebar.collapsed {
+            width: 256px;
+        }
+        .sidebar-mobile .lg\:pl-64.sidebar-collapsed {
+            padding-left: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 shadow-lg transform -translate-x-full lg:translate-x-0 transition-all duration-300 ease-in-out">
+        <div class="flex h-full flex-col overflow-y-auto">
+            <!-- Header -->
+            <div class="flex h-16 items-center justify-between border-b border-gray-200 dark:border-gray-700 px-4">
+                <div class="sidebar-logo flex items-center space-x-3 transition-all duration-300">
+                    <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="graduation-cap" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="sidebar-text text-lg font-bold text-gray-900 dark:text-white transition-all duration-300">Sinh viên</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <!-- Desktop Collapse Button -->
+                    <button id="collapseSidebar" class="hidden lg:flex items-center justify-center w-8 h-8 p-1 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 transition-colors" title="Thu gọn menu">
+                        <i data-lucide="chevrons-left" class="sidebar-collapse-icon w-4 h-4 transition-transform duration-300"></i>
+                    </button>
+                    <!-- Mobile Close Button -->
+                    <button id="closeSidebar" class="lg:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 px-4 py-6">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="@Url.Action("Index", "Home")" class="group flex w-full items-center rounded-lg px-3 py-2 text-gray-700 hover:bg-brand-50 hover:text-brand-600 dark:text-gray-200 dark:hover:bg-brand-900/20 dark:hover:text-brand-400 transition-colors" data-tooltip="Trang chủ">
+                            <i data-lucide="home" class="w-5 h-5 mr-3 flex-shrink-0"></i>
+                            <span class="nav-text">Trang chủ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Profile", "Account")" class="group flex w-full items-center rounded-lg px-3 py-2 text-gray-700 hover:bg-brand-50 hover:text-brand-600 dark:text-gray-200 dark:hover:bg-brand-900/20 dark:hover:text-brand-400 transition-colors" data-tooltip="Hồ sơ cá nhân">
+                            <i data-lucide="user" class="w-5 h-5 mr-3 flex-shrink-0"></i>
+                            <span class="nav-text">Hồ sơ cá nhân</span>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="px-3 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide nav-text">Học tập</div>
+                    </li>
+                    <li>
+                        <a href="#" class="group flex w-full items-center rounded-lg px-3 py-2 text-gray-700 hover:bg-brand-50 hover:text-brand-600 dark:text-gray-200 dark:hover:bg-brand-900/20 dark:hover:text-brand-400 transition-colors" data-tooltip="Thời khóa biểu">
+                            <i data-lucide="calendar" class="w-5 h-5 mr-3 flex-shrink-0"></i>
+                            <span class="nav-text">Thời khóa biểu</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="group flex w-full items-center rounded-lg px-3 py-2 text-gray-700 hover:bg-brand-50 hover:text-brand-600 dark:text-gray-200 dark:hover:bg-brand-900/20 dark:hover:text-brand-400 transition-colors" data-tooltip="Môn học đang học">
+                            <i data-lucide="book-open" class="w-5 h-5 mr-3 flex-shrink-0"></i>
+                            <span class="nav-text">Môn học đang học</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="group flex w-full items-center rounded-lg px-3 py-2 text-gray-700 hover:bg-brand-50 hover:text-brand-600 dark:text-gray-200 dark:hover:bg-brand-900/20 dark:hover:text-brand-400 transition-colors" data-tooltip="Điểm số & Kết quả">
+                            <i data-lucide="file-text" class="w-5 h-5 mr-3 flex-shrink-0"></i>
+                            <span class="nav-text">Điểm số & Kết quả</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="group flex w-full items-center rounded-lg px-3 py-2 text-gray-700 hover:bg-brand-50 hover:text-brand-600 dark:text-gray-200 dark:hover:bg-brand-900/20 dark:hover:text-brand-400 transition-colors" data-tooltip="Đăng ký môn học">
+                            <i data-lucide="plus-circle" class="w-5 h-5 mr-3 flex-shrink-0"></i>
+                            <span class="nav-text">Đăng ký môn học</span>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="px-3 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Tài chính</div>
+                    </li>
+                    <li>
+                        <a href="#" class="group flex w-full items-center rounded-lg px-3 py-2 text-gray-700 hover:bg-brand-50 hover:text-brand-600 dark:text-gray-200 dark:hover:bg-brand-900/20 dark:hover:text-brand-400 transition-colors">
+                            <i data-lucide="wallet" class="w-5 h-5 mr-3"></i>
+                            Ví điện tử
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="group flex w-full items-center rounded-lg px-3 py-2 text-gray-700 hover:bg-brand-50 hover:text-brand-600 dark:text-gray-200 dark:hover:bg-brand-900/20 dark:hover:text-brand-400 transition-colors">
+                            <i data-lucide="credit-card" class="w-5 h-5 mr-3"></i>
+                            Thanh toán học phí
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="group flex w-full items-center rounded-lg px-3 py-2 text-gray-700 hover:bg-brand-50 hover:text-brand-600 dark:text-gray-200 dark:hover:bg-brand-900/20 dark:hover:text-brand-400 transition-colors">
+                            <i data-lucide="history" class="w-5 h-5 mr-3"></i>
+                            Lịch sử giao dịch
+                        </a>
+                    </li>
+                    <li>
+                        <div class="px-3 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Hỗ trợ</div>
+                    </li>
+                    <li>
+                        <a href="#" class="group flex w-full items-center rounded-lg px-3 py-2 text-gray-700 hover:bg-brand-50 hover:text-brand-600 dark:text-gray-200 dark:hover:bg-brand-900/20 dark:hover:text-brand-400 transition-colors">
+                            <i data-lucide="brain" class="w-5 h-5 mr-3"></i>
+                            Phân tích AI
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="group flex w-full items-center rounded-lg px-3 py-2 text-gray-700 hover:bg-brand-50 hover:text-brand-600 dark:text-gray-200 dark:hover:bg-brand-900/20 dark:hover:text-brand-400 transition-colors">
+                            <i data-lucide="message-circle" class="w-5 h-5 mr-3"></i>
+                            Hỗ trợ & Liên hệ
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- User Info -->
+            <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                <div class="flex items-center space-x-3 mb-3">
+                    <img src="https://ui-avatars.com/api/?name=Student&background=465fff&color=fff&size=32" alt="Student Avatar" class="w-8 h-8 rounded-full">
+                    <div>
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">Sinh Viên Dev</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">SE180123</p>
+                    </div>
+                </div>
+                <div class="text-xs text-gray-500 dark:text-gray-400 mb-2">Số dư ví</div>
+                <div class="text-sm font-bold text-green-600 dark:text-green-400 mb-3">15,000,000 VNĐ</div>
+                <a href="@Url.Action("Logout", "Auth")" class="block text-center text-sm text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
+                    <i data-lucide="log-out" class="w-4 h-4 inline mr-1"></i>
+                    Đăng xuất
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="lg:pl-64">
+        <!-- Top Bar -->
+        <header class="sticky top-0 z-40 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+            <div class="px-4 sm:px-6 lg:px-8">
+                <div class="flex h-16 items-center justify-between">
+                    <!-- Mobile menu button -->
+                    <button type="button" id="mobile-menu-toggle" class="lg:hidden inline-flex items-center justify-center rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-600 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+
+                    <!-- Search -->
+                    <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-start">
+                        <div class="max-w-lg w-full lg:max-w-xs">
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i data-lucide="search" class="h-5 w-5 text-gray-400"></i>
+                                </div>
+                                <input id="search" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" placeholder="Tìm kiếm..." type="search">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right side -->
+                    <div class="ml-4 flex items-center space-x-4">
+                        <!-- Notifications -->
+                        <button type="button" class="relative p-2 text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300">
+                            <i data-lucide="bell" class="w-6 h-6"></i>
+                            <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white dark:ring-gray-800"></span>
+                        </button>
+
+                        <!-- Theme toggle -->
+                        <button type="button" id="theme-toggle" class="p-2 text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300">
+                            <i data-lucide="moon" class="w-6 h-6 hidden dark:block"></i>
+                            <i data-lucide="sun" class="w-6 h-6 block dark:hidden"></i>
+                        </button>
+
+                        <!-- Profile dropdown -->
+                        <div class="relative">
+                            <button type="button" id="profile-dropdown" class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+                                <img src="https://ui-avatars.com/api/?name=Student&background=465fff&color=fff&size=32" alt="Profile" class="w-8 h-8 rounded-full">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="py-6">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile sidebar backdrop -->
+    <div id="sidebar-backdrop" class="fixed inset-0 z-40 bg-gray-600 bg-opacity-75 opacity-0 pointer-events-none lg:hidden transition-opacity duration-300 ease-linear"></div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Check for saved theme preference or default to light
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            setTheme('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+
+        function toggleMobileMenu() {
+            sidebar.classList.toggle('-translate-x-full');
+            sidebarBackdrop.classList.toggle('opacity-0');
+            sidebarBackdrop.classList.toggle('pointer-events-none');
+        }
+
+        // Sidebar toggle functionality
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.querySelector('.lg\:pl-64');
+        const toggleSidebar = document.getElementById('mobile-menu-toggle');
+        const collapseSidebar = document.getElementById('collapseSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+        
+        let isCollapsed = localStorage.getItem('studentSidebarCollapsed') === 'true';
+        
+        // Apply saved state
+        if (isCollapsed && window.innerWidth >= 1024) {
+            sidebar.classList.add('collapsed');
+            if (mainContent) mainContent.classList.add('sidebar-collapsed');
+        }
+        
+        function toggleCollapse() {
+            const collapsed = sidebar.classList.toggle('collapsed');
+            if (mainContent) mainContent.classList.toggle('sidebar-collapsed', collapsed);
+            localStorage.setItem('studentSidebarCollapsed', collapsed);
+            lucide.createIcons();
+        }
+        
+        function toggleMobileSidebar() {
+            if (window.innerWidth < 1024) {
+                sidebar.classList.toggle('-translate-x-full');
+                sidebarBackdrop.classList.toggle('opacity-0');
+                sidebarBackdrop.classList.toggle('pointer-events-none');
+            } else {
+                toggleCollapse();
+            }
+        }
+        
+        if (toggleSidebar) toggleSidebar.addEventListener('click', toggleMobileSidebar);
+        if (collapseSidebar) collapseSidebar.addEventListener('click', toggleCollapse);
+        if (closeSidebar) {
+            closeSidebar.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                sidebarBackdrop.classList.add('opacity-0');
+                sidebarBackdrop.classList.add('pointer-events-none');
+            });
+        }
+        if (sidebarBackdrop) {
+            sidebarBackdrop.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                sidebarBackdrop.classList.add('opacity-0');
+                sidebarBackdrop.classList.add('pointer-events-none');
+            });
+        }
+        
+        window.addEventListener('resize', () => {
+            const isMobile = window.innerWidth < 1024;
+            document.body.classList.toggle('sidebar-mobile', isMobile);
+            
+            if (isMobile) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebarBackdrop.classList.add('opacity-0');
+                sidebarBackdrop.classList.add('pointer-events-none');
+                if (isCollapsed) {
+                    sidebar.classList.add('collapsed');
+                    if (mainContent) mainContent.classList.add('sidebar-collapsed');
+                }
+            } else {
+                sidebar.classList.remove('collapsed');
+                if (mainContent) mainContent.classList.remove('sidebar-collapsed');
+            }
+        });
+        
+        // Initialize mobile class
+        document.body.classList.toggle('sidebar-mobile', window.innerWidth < 1024);
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
